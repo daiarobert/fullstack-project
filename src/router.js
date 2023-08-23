@@ -7,8 +7,20 @@ import ViewTeam from "@/components/teams/ViewTeam.vue";
 import DeleteTeam from "@/components/teams/DeleteTeam.vue";
 import EditTeam from "@/components/teams/EditTeam.vue";
 import EditMember from "@/components/members/EditMember.vue";
+import Login from "@/components/login/LoginCard.vue";
+import RegisterCard from "@/RegisterCard.vue";
 
 const routes = [
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    name: "RegisterCard",
+    component: RegisterCard,
+  },
   {
     path: "/",
     name: "Home",

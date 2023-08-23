@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <div class="logout">Hello, {{ adminName }}</div>
     <h1 class="d-flex justify-content-start">Team Listing Page</h1>
     <div class="d-flex justify-content-start py-3">
       <RouterLink class="btn btn-outline-success" to="/addTeam">
@@ -43,7 +44,14 @@ export default {
       teamNamePromises: [],
       showModal: false,
       teamMembers: [],
+      adminName: "",
     };
+  },
+  created() {
+    const storedAdminName = localStorage.getItem("adminName");
+    if (storedAdminName) {
+      this.adminName = storedAdminName;
+    }
   },
   mounted() {
     this.fetchData();
@@ -182,6 +190,12 @@ export default {
 .btn {
   margin-right: 5px;
   min-width: 75px;
+}
+.logout {
+  display: flex;
+  justify-content: end;
+  font-size: 28px;
+  font-weight: 400;
 }
 input {
   margin-left: auto;

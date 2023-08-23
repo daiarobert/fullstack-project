@@ -1,11 +1,40 @@
 import axios from "axios";
+import router from "@/router";
+//import { getCookie } from "./cookies";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000",
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
+
+// axiosInstance.interceptors.request.use(
+//   (config) => {
+//     const token = getCookie("jwt");
+//     if (token) {
+//       config.headers["Authorization"] = `Bearer ${token}`;
+//     }
+//     return config;
+//   },
+//   (error) => {
+//     return Promise.reject(error);
+//   }
+// );
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      // Redirect to the login page when a 401 Unauthorized status is received
+      router.push("/login");
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const getMembers = () => {
   return axiosInstance.get("/members");
@@ -66,4 +95,12 @@ export const updateTeamName = (teamName, name) => {
 
 export const updateMemberName = (memberId, name) => {
   return axiosInstance.put(`/memberId/${memberId}/name`, { name });
+};
+
+export const registerAdmin = (data) => {
+  return axiosInstance.post("/register/admin", data);
+};
+
+export const login = (email, password) => {
+  return axiosInstance.post("/login", { email, password });
 };
